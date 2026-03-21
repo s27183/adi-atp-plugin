@@ -1,0 +1,8 @@
+{
+  "name": "adii-atp",
+  "description": "ATP — Agentic Transaction Protocol. Design compliant financial products across legal, transactional, and security pillars.",
+  "version": "0.1.0",
+  "author": {
+    "name": "adii"
+  }
+}

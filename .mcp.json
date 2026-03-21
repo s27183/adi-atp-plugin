@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "adii-atp": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "python", "-m", "adii.server"],
+      "env": {
+        "ADII_ATP_DIR": "${ADII_ATP_DIR:-}"
+      }
+    }
+  }
+}
