@@ -1,81 +1,60 @@
 ---
-description: Design a compliant exchange feature using ATP three-pillar analysis. Produces a design report with multiple options showing trade-offs across legal, transactional, and security pillars.
+description: Design a compliant exchange feature with cross-domain trade-off analysis. Produces design options where each option shows what you gain in one domain and what it costs in another.
+context: fork
 ---
 
-# Design Feature
+<context>
+This skill designs features where every decision in one domain has consequences in the others — making cross-domain trade-offs visible so the user chooses with full information.
 
+See [references/report-architecture.md](references/report-architecture.md) for report rendering guidance.
+</context>
+
+<instructions>
 The user wants to design: "$ARGUMENTS"
 
-## Phase 1: Intake — understand the user's constraints
+Ask who will read this report and what they need to act on.
 
-Before generating options, ask the user these questions to narrow the design space.
-Ask them conversationally, not as a checklist. Skip questions whose answers are
-obvious from the request.
+STOP here and wait for the user's response. The audience shapes which trade-offs to emphasize.
 
-**Business constraints:**
-- What's your priority — speed to market, regulatory safety, or user experience?
-- What's your target transaction volume and typical transaction size?
-- Any hard constraints? (e.g., "must not use Tron", "must support mobile", budget limits)
+<examples>
+Strong audience definitions:
 
-**Technical constraints:**
-- Which chains/protocols do you already support or prefer?
-- Do you need to support AI agents acting on behalf of users, or human-only for now?
-- What's your existing tech stack? (helps with implementation library recommendations)
+```json
+{"role": "cto", "needs": "Architecture trade-offs per option, which option minimizes re-platforming risk, infrastructure cost implications"}
+{"role": "product_manager", "needs": "Timeline impact per option, user experience trade-offs, what ships fastest vs what's most defensible"}
+{"role": "compliance_officer", "needs": "Regulatory gap analysis per option, which option is most defensible to regulators, citation-backed risk assessment"}
+```
+</examples>
 
-**Risk tolerance:**
-- How do you handle regulatory ambiguity? (conservative: wait for guidance / moderate: build with safeguards / aggressive: launch and adapt)
-- What's your appetite for new/less-proven technology vs established patterns?
+Gather design constraints conversationally — priority (speed/safety/UX), transaction volume, hard constraints (chains, stack, budget), risk tolerance for regulatory ambiguity, AI agents or human-only. Skip what's obvious.
 
-Wait for the user's answers before proceeding. Their answers define which design
-options are relevant and which trade-offs matter.
+Gather evidence in stages. Always start with the legal MCP tools — regulatory constraints shape every design option:
 
-## Phase 2: Three-pillar analysis
+- `classify_agent` + `get_obligations` — entity classifications and legal obligations for the feature's actors
+- `check_compliance` — check if the proposed activity complies with obligations
 
-With constraints understood, query ATP tools across all three pillars.
-Attach delegation context to all tool calls.
+If the feature involves security-sensitive or protocol-specific components, also query the relevant canonical sources before falling back to web search:
+- Security: `get_security_incidents`, `get_design_pattern` — incidents and patterns relevant to this feature type
+- Transactional: `compare_protocols`, `analyze_traceability`, `get_design_pattern` — protocol properties and traceability for candidate chains
 
-**Transactional pillar:**
-- compare_protocols for relevant primitives (finality, consensus, fee model)
-- analyze_traceability for candidate protocols
-- Identify fee model implications against user's volume/size targets
+Then gather broader context via web search. The evidence object is open schema — richer context produces better trade-off analysis:
 
-**Legal pillar:**
-- classify_agent for the exchange
-- get_obligations for the activity type
-- check_compliance for the described feature
-- Note all gaps and ambiguities
+- `governance_data` — output from the pillar MCP tools above (canonical source)
+- `requirements` — what the feature must do, user flows, business constraints
+- `constraints` — non-negotiable limits (regulatory, technical, budgetary)
+- `regulatory_context` — specific laws, articles, thresholds, jurisdictional requirements (supplement MCP data with jurisdiction-specific web search)
+- `protocol_data` — chain properties relevant to the feature (finality, throughput, fees)
+- `incident_data` — incidents at comparable systems that inform design choices
+- `comparable_implementations` — how similar features work at other exchanges, with trade-off evidence
+- `market_context` — competitive landscape, user expectations, regional specifics
 
-**Security pillar:**
-- Query security incidents relevant to this feature type
-- Identify delegation model, policy requirements, intervention needs
-- Match user's risk tolerance to security patterns
+Call `evaluate_design` with:
+- `target`: concise — e.g. "Crypto-to-VND conversion for Vietnamese exchange pilot under NQ 05/2025"
+- `subtype`: "feature"
+- `evidence`: structured dict with the keys above
+- `audiences`: audience aspects with specific needs
 
-## Phase 3: Generate design report
+Present the findings as a structured report. For the markdown: include a Mermaid `flowchart LR` summarizing constraints → trade-off → chosen option → residual risk. For the HTML: render options as styled cards with trade-off comparison. Enrich with specifics from evidence — cite regulations, protocol properties, incident precedents.
 
-Based on the pillar analysis AND the user's constraints, generate 2-4 design
-options. Each option represents a different trade-off between pillars.
-Do not pad options — only include meaningfully different alternatives.
-
-### Design Report structure:
-
-**For each option:**
-1. **Option name** — short, descriptive (e.g., "Conservative Ethereum", "Fast Tron with guardrails")
-2. **Trade-off summary** — one paragraph: what this option optimizes for and what it sacrifices
-3. **Transactional spec** — chain, protocol, fee model, finality, traceability analysis
-4. **Legal spec** — agent classification, obligations with citations, compliance status, gaps
-5. **Security spec** — delegation model, policies, intervention capability, relevant incidents
-6. **Implementation reference** — which libraries/frameworks suit this option
-7. **Risk assessment** — what could go wrong, how likely, how to mitigate
-
-**After all options:**
-- **Comparison matrix** — options side by side on key dimensions
-- **Recommendation** — which option best fits the user's stated constraints, and why
-
-Every claim must cite its source: legal document, protocol data, or security incident.
-
-## Phase 4: Iterate with user
-
-After presenting the design report:
-- Ask if any option should be explored deeper
-- Offer to export the selected option as a full spec report (markdown, HTML, or JSON)
-- If the user wants implementation code, use the spec report + protocol library MCPs
+Write the report to a markdown file, then render an interactive HTML report. Use [report-base.html](references/report-base.html) as the skeleton. Fill in content sections following [references/report-architecture.md](references/report-architecture.md). Bundle the markdown inside the HTML.
+</instructions>

@@ -1,12 +1,9 @@
 {
   "mcpServers": {
-    "adii-atp": {
+    "adii": {
       "type": "stdio",
       "command": "uv",
-      "args": ["run", "python", "-m", "adii.server"],
-      "env": {
-        "ADII_ATP_DIR": "${ADII_ATP_DIR:-}"
-      }
+      "args": ["--directory", "/Users/son/s2718/agent_x", "run", "python", "-m", "atp.server"]
     }
   }
 }

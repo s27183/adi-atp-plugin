@@ -1,6 +1,6 @@
 {
-  "name": "adii-atp",
-  "description": "ATP — Agentic Transaction Protocol. Design compliant financial products across legal, transactional, and security pillars.",
+  "name": "adii",
+  "description": "Adii — Agent governance analysis. Evaluate agent systems across security, operational, and regulatory domains.",
   "version": "0.1.0",
   "author": {
     "name": "adii"
