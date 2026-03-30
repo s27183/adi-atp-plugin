@@ -1,8 +1,9 @@
 {
-  "name": "adii",
-  "description": "Adii — Agent governance analysis. Evaluate agent systems across security, operational, and regulatory domains.",
-  "version": "0.1.0",
+  "name": "atp",
+  "description": "ATP — Agentic Transaction Protocols. Multi-dimensional analysis for Vietnam crypto: legal compliance, security assessment, and operational design.",
+  "version": "1.0.0",
   "author": {
-    "name": "adii"
+    "name": "BigSmall AI",
+    "url": "https://atp.bigsmallai.com"
   }
 }

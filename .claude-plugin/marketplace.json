@@ -1,0 +1,15 @@
+{
+  "name": "adii-atp-plugin",
+  "owner": {
+    "name": "BigSmall AI",
+    "email": "support@bigsmallai.com"
+  },
+  "plugins": [
+    {
+      "name": "atp",
+      "source": "./",
+      "description": "Multi-dimensional analysis for Vietnam crypto — legal compliance, security assessment, and operational design.",
+      "version": "1.0.0"
+    }
+  ]
+}

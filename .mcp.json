@@ -1,9 +1,11 @@
 {
   "mcpServers": {
-    "adii": {
-      "type": "stdio",
-      "command": "uv",
-      "args": ["--directory", "/Users/son/s2718/agent_x", "run", "python", "-m", "atp.server"]
+    "atp": {
+      "type": "http",
+      "url": "${ATP_SERVER_URL:-http://localhost:8080/mcp}",
+      "headers": {
+        "Authorization": "Bearer ${ATP_API_KEY}"
+      }
     }
   }
 }
