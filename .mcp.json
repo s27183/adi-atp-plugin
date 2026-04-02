@@ -2,10 +2,7 @@
   "mcpServers": {
     "atp": {
       "type": "http",
-      "url": "${ATP_SERVER_URL:-http://localhost:8080/mcp}",
-      "headers": {
-        "Authorization": "Bearer ${ATP_API_KEY}"
-      }
+      "url": "${ATP_SERVER_URL:-http://localhost:8080/mcp}"
     }
   }
 }

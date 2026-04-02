@@ -3,56 +3,45 @@ description: Cross-domain composition attack on an agent system. Finds vulnerabi
 context: fork
 ---
 
+You are orchestrating a cross-domain attack surface analysis. Your job is to gather context and evidence, then find compound vulnerabilities that single-domain analysis misses.
+
+You will be provided with:
+- **Context**: What this skill does. Delimited with <context> tags.
+- **Goal**: What the user is asking for. Delimited with <goal> tags.
+- **Instructions**: Sequential tasks to execute. Delimited with <instructions> tags.
+
 <context>
+
 This skill finds vulnerabilities at the seams between governance domains — where single-domain analysis misses compound failures because each domain looks adequate in isolation.
 
 See [references/report-architecture.md](references/report-architecture.md) for report rendering guidance.
+
 </context>
 
+<goal>
+
+$ARGUMENTS
+
+</goal>
+
 <instructions>
-The user names a system, deployment, or scenario to attack: "$ARGUMENTS"
 
-Ask who will read this report and what they need to act on.
+Execute the following six tasks sequentially.
 
-STOP here and wait for the user's response. The audience shapes what evidence to prioritize and how to present findings.
+**Task 1 — Create context questions:** Call the `gather_context` tool with factual, correct, and detailed information from `<goal>`. Stop and wait for the tool to return its output that includes context questions for the user to answer. Don't proceed to task 2 until the tool has returned output.
 
-<examples>
-Strong audience definitions:
+**Task 2 — Gather context:** Present the context questions gathered in task 1 to the user. Stop and wait for their responses.
 
-```json
-{"role": "security_engineering", "needs": "Remediation specs with implementation priority, attack path diagrams, control gap inventory with blast radius per gap"}
-{"role": "executive_board", "needs": "Risk assessment with business impact, liability exposure, precedent incidents with dollar figures"}
-{"role": "legal_counsel", "needs": "Regulatory exposure analysis, which gaps create compliance violations, jurisdiction-specific risk"}
-```
-</examples>
+**Task 3 — Gather evidence:** Call the `gather_evidence` tool with: (1) factual, correct, and detailed information from `<goal>`; (2) and the users' answers to the questions in task 2. Once the tool returns output, proceed to task 4.
 
-Gather evidence in stages. Always start with the security MCP tools — attack surface analysis requires curated incident and pattern data:
+**Task 4 — Enrich with web search:** Use web search to supplement both context and evidence gathered in task 2 and 3. Once the web search process returns output, proceed to task 5.
 
-- `get_security_incidents` — security incidents mapped to governance gaps (filter by dimension: identity, delegation, policy, intervention, revocation)
-- `get_design_pattern` — design patterns the target should implement
-
-If the target involves regulated entities or protocol-specific mechanics, also query the relevant canonical sources before falling back to web search:
-- Legal: `classify_agent`, `get_obligations` — entity classifications and obligations that create compliance-driven attack surfaces
-- Transactional: `compare_protocols`, `analyze_traceability` — protocol properties that create or mitigate attack vectors
-
-Then gather target-specific evidence via web search and source code analysis. Do not proceed until you have concrete evidence about the system's architecture, trust model, and authorization mechanism.
-
-The evidence object is open schema — pack it with structured context:
-
-- `governance_data` — output from the pillar MCP tools above (canonical source)
-- `source_code` — auth modules, policy enforcement, delegation/permission code, role definitions
-- `documentation` — security docs, architecture docs, trust model descriptions
-- `github_issues` — search for: security, permission, authorization, delegation, access control, multi-tenant
-- `security_advisories` — CVEs, public audits, incident disclosures
-- `incident_data` — specific post-mortems relevant to this system's architecture (feed concrete incidents, not just names)
-- `comparable_systems` — evidence from similar systems that share architectural patterns with the target
-
-Call `evaluate_attack_surface` with:
+**Task 5 — Evaluate Attack Surface:** Call the `evaluate_attack_surface` tool with the following information:
 - `target`: concise — e.g. "OpenClaw v6 — MCP-based agent framework"
-- `evidence`: structured dict with the keys above
+- `evidence`: structured dict. Evidence dict MUST include both `gather_evidence_result` and `gather_context_result`.
 - `audiences`: audience aspects with specific needs
+- Once the `evaluate_attack_surface` tool returns output, proceed to task 6.
 
-Present the findings as a structured report. For the markdown: transform `known_attacks` and `novel_attacks` into Mermaid `sequenceDiagram` blocks showing attacker actions, exploited gaps, and blast radius. For the HTML report: render attack paths as styled HTML/CSS with governance gap annotations. Enrich with context from evidence gathering — link findings to specific source code, documentation, or GitHub issues.
+**Task 6 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
 
-Write the report to a markdown file, then render an interactive HTML report. Use [report-base.html](references/report-base.html) as the skeleton. Fill in content sections following [references/report-architecture.md](references/report-architecture.md). Bundle the markdown inside the HTML.
 </instructions>
