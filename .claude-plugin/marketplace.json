@@ -6,7 +6,7 @@
   },
   "plugins": [
     {
-      "name": "adi",
+      "name": "atp",
       "source": "./",
       "description": "Multi-dimensional analysis for Vietnam crypto — legal compliance, security assessment, and operational design.",
       "version": "1.0.0"
