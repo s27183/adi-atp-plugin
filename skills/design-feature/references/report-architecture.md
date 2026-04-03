@@ -28,6 +28,9 @@ OPTIONS
   Option B
   ...
 RECOMMENDATION
+SIMULATION
+  Scenario Results
+  Discoveries
 REMEDIATIONS
 ```
 
@@ -49,6 +52,8 @@ REMEDIATIONS
 **Compound vulnerability card** — shows gap interaction chain. Purple accent. Description, gaps involved, severity, blast radius.
 
 **Recommendation callout** — prominent box below options. States which option, why, what residual risk is accepted. Green accent border.
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Remediation cards** — P0 (red before launch), P1 (orange before scale), P2 (blue regulatory insurance). Each links back to which compound vulnerabilities it addresses.
 

@@ -37,6 +37,9 @@ CONTRACTS
 BEHAVIOR
   Sequence Flows
   Edge Cases
+SIMULATION
+  Scenario Results
+  Discoveries
 GOVERNANCE
   Invariants
   Dependencies
@@ -63,6 +66,8 @@ GOVERNANCE
 **Sequence flow** — numbered steps with CSS grid (step number circle + content). Each step shows: actor (dim uppercase label), action, governance check (purple badge inline). The legal initiation event gets a distinct accent (blue circle instead of gray). Control points summarized after the flow.
 
 **Edge case accordion** — collapsible card. Header: scenario name + chevron. Body: trigger, governance impact, required response, blast radius if unhandled (red warning box).
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Governance invariants** — numbered cards with purple accent border. System-wide "always" and "never" rules.
 

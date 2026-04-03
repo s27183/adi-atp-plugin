@@ -29,6 +29,9 @@ ATTACKS
   Novel Attacks
 CONTROLS
   Missing Controls
+SIMULATION
+  Scenario Results
+  Discoveries
 REMEDIATION
   Prioritized Fixes
 ```
@@ -55,6 +58,8 @@ Visually distinguish known vs novel:
 **Compound vulnerability cards** — show which gaps interact (list of gap categories), severity, blast radius. Purple accent to indicate cross-domain interaction.
 
 **Missing control cards** — control name, risk created. Simple two-column layout.
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Remediation timeline** — P0 (red), P1 (orange), P2 (blue). Each shows: label, which attacks it addresses (reference IDs), whether it requires coordinated changes across areas.
 

@@ -31,6 +31,9 @@ GAPS
   Regulatory Gaps
   Enforcement Gaps
   Evidence Gaps
+SIMULATION
+  Scenario Results
+  Discoveries
 REMEDIATIONS
 ```
 
@@ -50,6 +53,8 @@ REMEDIATIONS
 - Enforcement gaps (red border) — obligations the system cannot enforce in practice
 - Evidence gaps (orange border) — obligations the system cannot prove to a third party
 Each gap is a card with the obligation it relates to and what's missing.
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Compound vulnerability cards** — where compliance exists on paper but cross-domain gaps make it unenforceable or unprovable. Shows the gap chain as a styled flow: obligation → provable? → enforceable? → where it breaks.
 

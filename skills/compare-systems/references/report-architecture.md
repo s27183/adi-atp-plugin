@@ -27,6 +27,9 @@ COMPARISON
 ANALYSIS
   Gap Assessment
   Compound Exposure
+SIMULATION
+  Scenario Results
+  Discoveries
 ASSESSMENT
 REMEDIATIONS
 ```
@@ -45,6 +48,8 @@ REMEDIATIONS
 **System profile card** — expandable. Header: system name, maturity level (high/medium/low badge), maturity profile bar chart (working green, known gaps amber, blind spots red). Body: strengths, weaknesses, system-specific gaps.
 
 **Key difference cards** — each difference grounded in governance coverage, not opinion. Shows: what System A does better, what System B does better, with evidence.
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Compound exposure cards** — per-system. Shows which cross-domain failures each system is vulnerable to. Two systems can have the same score but radically different exposure — this section makes that visible.
 

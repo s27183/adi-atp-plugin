@@ -29,6 +29,9 @@ PROTOCOLS
   Candidate B
   ...
 RECOMMENDATION
+SIMULATION
+  Scenario Results
+  Discoveries
 REMEDIATIONS
 ```
 
@@ -46,6 +49,8 @@ REMEDIATIONS
 - Properties with actual data (not "fast" — "2.5s finality")
 - Cross-domain consequences: for each property, what it implies for compliance and security
 - Risks specific to this protocol for this use case
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Consequence trace** — for key protocol properties, a visual chain showing operational property → regulatory implication → security implication. Styled as horizontal flow steps with domain-colored badges.
 

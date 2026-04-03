@@ -8,6 +8,7 @@ You are orchestrating a security review. Your job is to gather context and evide
 You will be provided with:
 - **Context**: What this skill does. Delimited with <context> tags.
 - **Goal**: What the user is asking for. Delimited with <goal> tags.
+- **Safety**: Operational constraints. Delimited with <safety> tags.
 - **Instructions**: Sequential tasks to execute. Delimited with <instructions> tags.
 
 <context>
@@ -24,9 +25,18 @@ $ARGUMENTS
 
 </goal>
 
+<safety>
+
+Do not retry, abort, or report failure for ATP tool calls until you receive
+a final response or an explicit error. Tool calls may take 2-5 minutes —
+the skill pipeline runs multiple AI agents sequentially. If you see a timeout
+warning, ignore it and wait for the result.
+
+</safety>
+
 <instructions>
 
-Execute the following six tasks sequentially.
+Execute the following eight tasks sequentially.
 
 **Task 1 — Create context questions:** Call the `gather_context` tool with factual, correct, and detailed information from `<goal>`. Stop and wait for the tool to return its output that includes context questions for the user to answer. Don't proceed to task 2 until the tool has returned output.
 
@@ -43,6 +53,13 @@ Execute the following six tasks sequentially.
 - `audiences`: audience aspects with specific needs
 - Once the `evaluate_review` tool returns output, proceed to task 6.
 
-**Task 6 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 6 — Simulate:** Call the `simulate` tool with:
+- `target`: same target as task 5
+- `evaluation`: the full evaluation output from task 5
+- The simulation agent will run scenarios from the evaluation output against operational tools (delegation, policy, identity, intervention) to validate whether the design actually works. Once the `simulate` tool returns output, proceed to task 7.
+
+**Task 7 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 8.
+
+**Task 8 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in both evaluation (task 5) and simulation (task 6) results. Include a Simulation section showing scenario pass/fail results and discoveries. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
 
 </instructions>

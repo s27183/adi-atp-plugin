@@ -42,6 +42,21 @@
     "recommendation": "one-paragraph actionable recommendation"
   },
 
+  "simulation": {
+    "scenarios_run": 0,
+    "scenarios_passed": 0,
+    "scenarios_failed": 0,
+    "results": [
+      {
+        "scenario": "scenario name",
+        "outcome": "pass|fail|partial",
+        "finding": "what happened",
+        "severity": "critical|high|medium|low|info"
+      }
+    ],
+    "discoveries": ["emergent issues found by chaining operations"]
+  },
+
   "flow": {
     "type": "design|review|compare|attack|spec",
     "nodes": [ "...see node schema below" ],

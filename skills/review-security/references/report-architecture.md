@@ -32,6 +32,9 @@ GAPS
   Regulatory Undermining
   Enforcement Gaps
   Forensic Gaps
+SIMULATION
+  Scenario Results
+  Discoveries
 REMEDIATIONS
 ```
 
@@ -49,6 +52,8 @@ REMEDIATIONS
 **False confidence card** — visually distinct from regular controls. Striped or hatched border pattern. Shows: the control that appears adequate, what it depends on, where the dependency breaks, why this creates false confidence. This is the report's signature finding — give it visual prominence.
 
 **Dependency visualization** — for each control, a horizontal chain: control → depends on → depends on → (break). Styled as flow steps with domain-colored badges. The break point gets a red "X" marker.
+
+**Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
 **Compound vulnerability cards** — security gaps that compound with other domain gaps. Shows: which controls interact, why the combination is worse than the sum of parts, blast radius.
 
