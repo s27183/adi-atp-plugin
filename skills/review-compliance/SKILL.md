@@ -42,14 +42,14 @@ Execute the following eight tasks sequentially.
 
 **Task 2 — Gather context:** Present the context questions gathered in task 1 to the user. Stop and wait for their responses.
 
-**Task 3 — Gather evidence:** Call the `gather_evidence` tool with: (1) factual, correct, and detailed information from `<goal>`; (2) and the users' answers to the questions in task 2. Once the tool returns output, proceed to task 4.
+**Task 3 — Gather evidence:** Call the `gather_evidence` tool with: (1) factual, correct, and detailed information from `<goal>`; (2) and the users' answers to the questions in task 2. The tool returns an evidence summary with an `evidence_id`. Save this ID — you will pass it to the evaluation tool. Proceed to task 4.
 
 **Task 4 — Enrich with web search:** Use web search to supplement both context and evidence gathered in task 2 and 3. Once the web search process returns output, proceed to task 5.
 
 **Task 5 — Evaluate Review:** Call the `evaluate_review` tool with the following information:
 - `target`: concise — e.g. "Crypto exchange pilot compliance under NQ 05/2025"
 - `subtype`: "compliance"
-- `evidence`: structured dict. Evidence dict MUST include both `gather_evidence_result` and `gather_context_result`.
+- `evidence`: structured dict containing `evidence_id` (from task 3) and `gather_context_result` (user answers from task 2). The server resolves evidence internally.
 - `audiences`: audience aspects with specific needs
 - Once the `evaluate_review` tool returns output, proceed to task 6.
 
