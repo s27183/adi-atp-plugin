@@ -48,7 +48,8 @@ Execute the following eight tasks sequentially.
 
 **Task 5 — Evaluate Attack Surface:** Call the `evaluate_attack_surface` tool with the following information:
 - `target`: concise — e.g. "OpenClaw v6 — MCP-based agent framework"
-- `evidence`: structured dict containing `evidence_id` (from task 3) and `gather_context_result` (user answers from task 2). The server resolves evidence internally.
+- `evidence_id`: the evidence ID string from task 3
+- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - `audiences`: audience aspects with specific needs
 - Once the `evaluate_attack_surface` tool returns output, proceed to task 6.
 

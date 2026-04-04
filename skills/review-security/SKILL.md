@@ -49,7 +49,8 @@ Execute the following eight tasks sequentially.
 **Task 5 — Evaluate Review:** Call the `evaluate_review` tool with the following information:
 - `target`: concise — e.g. "OpenClaw v6 — MCP agent framework security posture"
 - `subtype`: "security"
-- `evidence`: structured dict containing `evidence_id` (from task 3) and `gather_context_result` (user answers from task 2). The server resolves evidence internally.
+- `evidence_id`: the evidence ID string from task 3
+- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - `audiences`: audience aspects with specific needs
 - Once the `evaluate_review` tool returns output, proceed to task 6.
 

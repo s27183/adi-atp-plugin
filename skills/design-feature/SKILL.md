@@ -49,7 +49,8 @@ Execute the following eight tasks sequentially.
 **Task 5 — Evaluate Design:** Call the `evaluate_design` tool with the following information:
 - `target`: concise — e.g. "Crypto-to-VND conversion for Vietnamese exchange pilot under NQ 05/2025"
 - `subtype`: "feature"
-- `evidence`: structured dict containing `evidence_id` (from task 3) and `gather_context_result` (user answers from task 2). The server resolves evidence internally.
+- `evidence_id`: the evidence ID string from task 3
+- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - `audiences`: audience aspects with specific needs
 - Once the `evaluate_design` tool returns output, proceed to task 6.
 
