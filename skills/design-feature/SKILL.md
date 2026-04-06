@@ -52,12 +52,12 @@ Execute the following eight tasks sequentially.
 - `evidence_id`: the evidence ID string from task 3
 - `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - `audiences`: audience aspects with specific needs
-- Once the `evaluate_design` tool returns output, proceed to task 6.
+- The response includes an `evaluation_id` and summary. Save the `evaluation_id` for task 6. Proceed to task 6.
 
 **Task 6 — Simulate:** Call the `simulate` tool with:
 - `target`: same target as task 5
-- `evaluation`: the full evaluation output from task 5
-- The simulation agent will run scenarios from the evaluation output against operational tools (delegation, policy, identity, intervention) to validate whether the design actually works. Once the `simulate` tool returns output, proceed to task 7.
+- `evaluation_id`: the evaluation_id from task 5. The server resolves full evaluation output automatically.
+- The simulation agent will run scenarios against operational tools (delegation, policy, identity, intervention) to validate whether the design actually works. Once the `simulate` tool returns output, proceed to task 7.
 
 **Task 7 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 8.
 
