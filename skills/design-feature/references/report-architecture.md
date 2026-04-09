@@ -12,6 +12,7 @@ Self-contained HTML with bundled markdown. Use [report-base.html](report-base.ht
 | `compound_vulnerabilities` | Analysis > Compound Vulnerabilities | Cross-domain interaction cards |
 | `options` | Options > Option A/B/C/D | Option cards (expandable) |
 | `recommendation` | Recommendation | Highlighted callout |
+| `legal_output` | Legal Analysis | Legal finding cards with Vietnamese citations |
 | `remediations` | Remediations | P0/P1/P2 timeline |
 
 ## Sidebar sections
@@ -28,6 +29,7 @@ OPTIONS
   Option B
   ...
 RECOMMENDATION
+LEGAL ANALYSIS
 SIMULATION
   Scenario Results
   Discoveries
@@ -52,6 +54,8 @@ REMEDIATIONS
 **Compound vulnerability card** — shows gap interaction chain. Purple accent. Description, gaps involved, severity, blast radius.
 
 **Recommendation callout** — prominent box below options. States which option, why, what residual risk is accepted. Green accent border.
+
+**Legal Analysis section** — organized by legal topic (e.g., licensing, capital requirements, KYC/AML). Each topic card contains: applicable laws (Vietnamese references), verbatim Vietnamese legal text in blockquotes, obligations and restrictions, risk level badge, and identified gaps. English reports: state finding in English, cite Vietnamese text in parentheses. Vietnamese reports: cite Vietnamese text inline. Always include legal reference (e.g., "NQ 05/2025, Điều 7"). Only rendered when `<legal_evaluation>` data is provided.
 
 **Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 

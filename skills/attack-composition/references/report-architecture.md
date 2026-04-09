@@ -13,6 +13,7 @@ Self-contained HTML with bundled markdown. Use [report-base.html](report-base.ht
 | `known_attacks` | Attacks > Known Attacks | Attack cards with precedent citations |
 | `novel_attacks` | Attacks > Novel Attacks | Attack cards with confidence badges |
 | `missing_controls` | Controls > Missing Controls | Control cards with risk created |
+| `legal_output` | Legal Analysis | Legal finding cards with Vietnamese citations |
 | `remediations` | Remediation > Prioritized Fixes | P0/P1/P2 timeline |
 
 ## Sidebar sections
@@ -29,6 +30,7 @@ ATTACKS
   Novel Attacks
 CONTROLS
   Missing Controls
+LEGAL ANALYSIS
 SIMULATION
   Scenario Results
   Discoveries
@@ -58,6 +60,8 @@ Visually distinguish known vs novel:
 **Compound vulnerability cards** — show which gaps interact (list of gap categories), severity, blast radius. Purple accent to indicate cross-domain interaction.
 
 **Missing control cards** — control name, risk created. Simple two-column layout.
+
+**Legal Analysis section** — organized by legal topic (e.g., licensing, capital requirements, KYC/AML). Each topic card contains: applicable laws (Vietnamese references), verbatim Vietnamese legal text in blockquotes, obligations and restrictions, risk level badge, and identified gaps. English reports: state finding in English, cite Vietnamese text in parentheses. Vietnamese reports: cite Vietnamese text inline. Always include legal reference (e.g., "NQ 05/2025, Điều 7"). Only rendered when `<legal_evaluation>` data is provided.
 
 **Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 

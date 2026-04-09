@@ -20,6 +20,7 @@ Transform `evaluate_spec` output mechanically:
 | `edge_cases` | Behavior > Edge Cases | Collapsible accordions |
 | `governance_invariants` | Governance > Invariants | Numbered list |
 | `dependencies` | Governance > Dependencies | Table |
+| `legal_output` | Legal Analysis | Legal finding cards with Vietnamese citations |
 | `remediations` | Governance > Remediations | P0/P1/P2 timeline |
 
 ## Sidebar sections
@@ -37,6 +38,7 @@ CONTRACTS
 BEHAVIOR
   Sequence Flows
   Edge Cases
+LEGAL ANALYSIS
 SIMULATION
   Scenario Results
   Discoveries
@@ -66,6 +68,8 @@ GOVERNANCE
 **Sequence flow** — numbered steps with CSS grid (step number circle + content). Each step shows: actor (dim uppercase label), action, governance check (purple badge inline). The legal initiation event gets a distinct accent (blue circle instead of gray). Control points summarized after the flow.
 
 **Edge case accordion** — collapsible card. Header: scenario name + chevron. Body: trigger, governance impact, required response, blast radius if unhandled (red warning box).
+
+**Legal Analysis section** — organized by legal topic (e.g., licensing, capital requirements, KYC/AML). Each topic card contains: applicable laws (Vietnamese references), verbatim Vietnamese legal text in blockquotes, obligations and restrictions, risk level badge, and identified gaps. English reports: state finding in English, cite Vietnamese text in parentheses. Vietnamese reports: cite Vietnamese text inline. Always include legal reference (e.g., "NQ 05/2025, Điều 7"). Only rendered when `<legal_evaluation>` data is provided.
 
 **Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 

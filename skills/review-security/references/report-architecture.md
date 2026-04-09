@@ -14,6 +14,7 @@ Self-contained HTML with bundled markdown. Use [report-base.html](report-base.ht
 | `regulatory_gaps` | Gaps > Regulatory Undermining | Where regulatory ambiguity undermines security |
 | `enforcement_gaps` | Gaps > Enforcement Gaps | Where security controls are insufficient |
 | `evidence_gaps` | Gaps > Forensic Gaps | Where the system cannot support forensics |
+| `legal_output` | Legal Analysis | Legal finding cards with Vietnamese citations |
 | `remediations` | Remediations | P0/P1/P2 timeline |
 
 ## Sidebar sections
@@ -32,6 +33,7 @@ GAPS
   Regulatory Undermining
   Enforcement Gaps
   Forensic Gaps
+LEGAL ANALYSIS
 SIMULATION
   Scenario Results
   Discoveries
@@ -52,6 +54,8 @@ REMEDIATIONS
 **False confidence card** — visually distinct from regular controls. Striped or hatched border pattern. Shows: the control that appears adequate, what it depends on, where the dependency breaks, why this creates false confidence. This is the report's signature finding — give it visual prominence.
 
 **Dependency visualization** — for each control, a horizontal chain: control → depends on → depends on → (break). Styled as flow steps with domain-colored badges. The break point gets a red "X" marker.
+
+**Legal Analysis section** — organized by legal topic (e.g., licensing, capital requirements, KYC/AML). Each topic card contains: applicable laws (Vietnamese references), verbatim Vietnamese legal text in blockquotes, obligations and restrictions, risk level badge, and identified gaps. English reports: state finding in English, cite Vietnamese text in parentheses. Vietnamese reports: cite Vietnamese text inline. Always include legal reference (e.g., "NQ 05/2025, Điều 7"). Only rendered when `<legal_evaluation>` data is provided.
 
 **Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 

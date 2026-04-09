@@ -14,6 +14,7 @@ Self-contained HTML with bundled markdown. Use [report-base.html](report-base.ht
 | `regulatory_gaps` | Gaps > Regulatory Gaps | Amber section |
 | `enforcement_gaps` | Gaps > Enforcement Gaps | Red section |
 | `evidence_gaps` | Gaps > Evidence Gaps | Orange section |
+| `legal_output` | Legal Analysis | Legal finding cards with Vietnamese citations |
 | `remediations` | Remediations | P0/P1/P2 timeline |
 
 ## Sidebar sections
@@ -31,6 +32,7 @@ GAPS
   Regulatory Gaps
   Enforcement Gaps
   Evidence Gaps
+LEGAL ANALYSIS
 SIMULATION
   Scenario Results
   Discoveries
@@ -53,6 +55,8 @@ REMEDIATIONS
 - Enforcement gaps (red border) — obligations the system cannot enforce in practice
 - Evidence gaps (orange border) — obligations the system cannot prove to a third party
 Each gap is a card with the obligation it relates to and what's missing.
+
+**Legal Analysis section** — organized by legal topic (e.g., licensing, capital requirements, KYC/AML). Each topic card contains: applicable laws (Vietnamese references), verbatim Vietnamese legal text in blockquotes, obligations and restrictions, risk level badge, and identified gaps. English reports: state finding in English, cite Vietnamese text in parentheses. Vietnamese reports: cite Vietnamese text inline. Always include legal reference (e.g., "NQ 05/2025, Điều 7"). Only rendered when `<legal_evaluation>` data is provided.
 
 **Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 

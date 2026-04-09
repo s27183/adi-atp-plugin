@@ -13,6 +13,7 @@ Self-contained HTML with bundled markdown. Use [report-base.html](report-base.ht
 | `systems` | Comparison > Side-by-Side | System profile cards + comparison table |
 | `key_differences` | Comparison > Key Differences | Difference cards |
 | `assessment` | Assessment | What both systems need |
+| `legal_output` | Legal Analysis | Legal finding cards with Vietnamese citations |
 | `remediations` | Remediations | Priority timeline |
 
 ## Sidebar sections
@@ -27,6 +28,7 @@ COMPARISON
 ANALYSIS
   Gap Assessment
   Compound Exposure
+LEGAL ANALYSIS
 SIMULATION
   Scenario Results
   Discoveries
@@ -48,6 +50,8 @@ REMEDIATIONS
 **System profile card** — expandable. Header: system name, maturity level (high/medium/low badge), maturity profile bar chart (working green, known gaps amber, blind spots red). Body: strengths, weaknesses, system-specific gaps.
 
 **Key difference cards** — each difference grounded in governance coverage, not opinion. Shows: what System A does better, what System B does better, with evidence.
+
+**Legal Analysis section** — organized by legal topic (e.g., licensing, capital requirements, KYC/AML). Each topic card contains: applicable laws (Vietnamese references), verbatim Vietnamese legal text in blockquotes, obligations and restrictions, risk level badge, and identified gaps. English reports: state finding in English, cite Vietnamese text in parentheses. Vietnamese reports: cite Vietnamese text inline. Always include legal reference (e.g., "NQ 05/2025, Điều 7"). Only rendered when `<legal_evaluation>` data is provided.
 
 **Simulation section** — pass/fail table with scenario name, outcome badge (green pass, red fail, yellow partial), and finding. Discoveries listed below as warning cards with amber accent. Failed scenarios should link to the relevant remediation.
 
