@@ -4,6 +4,7 @@
     "name": "BigSmall AI",
     "email": "son@bigsmallai.com"
   },
+
   "plugins": [
     {
       "name": "atp",
