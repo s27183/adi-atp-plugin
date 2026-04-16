@@ -5,5 +5,9 @@
   "author": {
     "name": "BigSmall AI",
     "url": "https://atp.bigsmallai.com"
-  }
+  },
+  "homepage": "https://atp.bigsmallai.com",
+  "repository": "https://github.com/s27183/adi-atp-plugin",
+  "license": "MIT",
+  "keywords": ["crypto", "vietnam", "compliance", "security", "exchange", "governance"]
 }
