@@ -47,14 +47,14 @@ Execute the following eight tasks sequentially.
 **Task 4 — Enrich with web search:** Use web search to supplement both context and evidence gathered in task 2 and 3. Once the web search process returns output, proceed to task 5.
 
 **Task 5 — Evaluate Legal:** Call the `evaluate_legal` tool with the following information:
-- `target`: concise — e.g. "USDT remittance corridor legal compliance under Vietnamese law"
+- `user_query`: concise — e.g. "USDT remittance corridor legal compliance under Vietnamese law"
 - `evidence_id`: the evidence ID string from task 3
 - `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
-- The response includes a `legal_id` and summary with cited Vietnamese legal findings. Save the `legal_id` for task 6. Proceed to task 6.
+- The response includes an `evaluation_id` and summary with cited Vietnamese legal findings. Save the `evaluation_id` for task 6. Proceed to task 6.
 
 **Task 6 — Simulate:** Call the `simulate` tool with:
-- `target`: same target as task 5
-- `legal_id`: the legal_id from task 5. The server resolves full legal output automatically.
+- `user_query`: same as task 5
+- `evaluation_id`: the evaluation_id from task 5. The server resolves full legal output automatically.
 - The simulation agent will run scenarios against governance controls and legal obligations to validate compliance boundaries. Once the `simulate` tool returns output, proceed to task 7.
 
 **Task 7 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate compliance gaps or regulatory risks. Proceed to task 8.

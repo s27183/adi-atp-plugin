@@ -47,20 +47,20 @@ Execute the following nine tasks sequentially.
 **Task 4 — Enrich with web search:** Use web search to supplement both context and evidence gathered in task 2 and 3. Once the web search process returns output, proceed to task 5.
 
 **Task 5 — Evaluate Attack Surface:** Call the `evaluate_attack_surface` tool with the following information:
-- `target`: concise — e.g. "OpenClaw v6 — MCP-based agent framework"
+- `user_query`: concise — e.g. "OpenClaw v6 — MCP-based agent framework"
 - `evidence_id`: the evidence ID string from task 3
 - `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - `audiences`: audience aspects with specific needs
 - The response includes an `evaluation_id` and summary. Save the `evaluation_id` for task 6. Proceed to task 6.
 
 **Task 6 — Evaluate Legal:** Call the `evaluate_legal` tool with:
-- `target`: same target as task 5
+- `user_query`: same as task 5
 - `evidence_id`: the evidence ID string from task 3
 - `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - The response includes a `legal_id` and cited Vietnamese legal findings. Save the `legal_id` for task 7. Proceed to task 7.
 
 **Task 7 — Simulate:** Call the `simulate` tool with:
-- `target`: same target as task 5
+- `user_query`: same as task 5
 - `evaluation_id`: the evaluation_id from task 5. The server resolves full evaluation and legal output automatically.
 - The simulation agent will run scenarios against operational tools (delegation, policy, identity, intervention) to validate whether the design actually works. Once the `simulate` tool returns output, proceed to task 8.
 

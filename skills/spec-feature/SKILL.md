@@ -15,7 +15,7 @@ You will be provided with:
 
 This skill translates a design decision into implementation specs a technical team can build from. Governance controls are structural — embedded in every API endpoint, data model, and sequence flow as first-class elements, not added as a compliance layer after.
 
-Chains from design-feature. If no design decision exists, run design-feature first. After the spec is produced, render it as an interactive HTML report with bundled markdown.
+Chains from design-feature. If `<goal>` does not contain a chosen design option with its key trade-off, ask the user to either provide one or run `/design-feature` first — do not invent a design decision. After the spec is produced, render it as an interactive HTML report with bundled markdown.
 
 See [references/report-architecture.md](references/report-architecture.md) for report rendering guidance.
 
@@ -49,7 +49,7 @@ Execute the following nine tasks sequentially.
 **Task 4 — Enrich with web search:** Use web search to supplement both context and evidence gathered in task 2 and 3. Once the web search process returns output, proceed to task 5.
 
 **Task 5 — Evaluate Spec:** Call the `evaluate_spec` tool with the following information:
-- `target`: concise — e.g. "Crypto-to-VND spot conversion (BTC, ETH, USDT) — greenfield, governance-first, pre-license"
+- `user_query`: concise — e.g. "Crypto-to-VND spot conversion (BTC, ETH, USDT) — greenfield, governance-first, pre-license"
 - `design_decision`: the chosen option and its key trade-off
 - `evidence_id`: the evidence ID string from task 3
 - `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
@@ -57,13 +57,13 @@ Execute the following nine tasks sequentially.
 - The response includes an `evaluation_id` and summary. Save the `evaluation_id` for task 6. Proceed to task 6.
 
 **Task 6 — Evaluate Legal:** Call the `evaluate_legal` tool with:
-- `target`: same target as task 5
+- `user_query`: same as task 5
 - `evidence_id`: the evidence ID string from task 3
 - `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
 - The response includes a `legal_id` and cited Vietnamese legal findings. Save the `legal_id` for task 7. Proceed to task 7.
 
 **Task 7 — Simulate:** Call the `simulate` tool with:
-- `target`: same target as task 5
+- `user_query`: same as task 5
 - `evaluation_id`: the evaluation_id from task 5. The server resolves full evaluation and legal output automatically.
 - The simulation agent will run scenarios against operational tools (delegation, policy, identity, intervention) to validate whether the design actually works. Once the `simulate` tool returns output, proceed to task 8.
 
