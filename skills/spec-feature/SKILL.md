@@ -48,27 +48,27 @@ Execute the following nine tasks sequentially.
 
 **Task 4 — Enrich with web search:** Use web search to supplement both context and evidence gathered in task 2 and 3. Once the web search process returns output, proceed to task 5.
 
-**Task 5 — Evaluate Spec:** Call the `evaluate_spec` tool with the following information:
+**Task 5 — Evaluate Legal:** Call the `evaluate_legal` tool with:
 - `user_query`: concise — e.g. "Crypto-to-VND spot conversion (BTC, ETH, USDT) — greenfield, governance-first, pre-license"
+- `evidence_id`: the evidence ID string from task 3
+- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
+- The response includes an `evaluation_id` and the full legal report — cited Vietnamese legal findings with verbatim text, obligations, restrictions, and penalties. Retain the returned blob for task 9. Proceed to task 6.
+
+**Task 6 — Evaluate Spec:** Call the `evaluate_spec` tool with:
+- `user_query`: same as task 5
 - `design_decision`: the chosen option and its key trade-off
 - `evidence_id`: the evidence ID string from task 3
-- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
+- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`. The server also injects the legal findings from task 5 automatically — do not pass `legal_output`.
 - `audiences`: audience aspects with specific needs
-- The response includes an `evaluation_id` and summary. Save the `evaluation_id` for task 6. Proceed to task 6.
-
-**Task 6 — Evaluate Legal:** Call the `evaluate_legal` tool with:
-- `user_query`: same as task 5
-- `evidence_id`: the evidence ID string from task 3
-- `evidence`: structured dict containing `gather_context_result` (user answers from task 2). The server resolves the full evidence internally using `evidence_id`.
-- The response includes a `legal_id` and cited Vietnamese legal findings. Save the `legal_id` for task 7. Proceed to task 7.
+- The response includes an `evaluation_id` and the full spec report (API contracts, data models, sequence flows, edge cases). Retain the returned blob for task 9. Pass only the `evaluation_id` to task 7. Proceed to task 7.
 
 **Task 7 — Simulate:** Call the `simulate` tool with:
 - `user_query`: same as task 5
-- `evaluation_id`: the evaluation_id from task 5. The server resolves full evaluation and legal output automatically.
-- The simulation agent will run scenarios against operational tools (delegation, policy, identity, intervention) to validate whether the design actually works. Once the `simulate` tool returns output, proceed to task 8.
+- `evaluation_id`: the evaluation_id from task 6. The server resolves the full evaluation and also injects legal findings from task 5 automatically.
+- The simulation agent runs scenarios against operational tools (delegation, policy, identity, intervention) and checks them against cited legal obligations. The response includes the full simulation output with per-scenario setup, action, expected, and outcome. Retain the returned blob for task 9. Proceed to task 8.
 
 **Task 8 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 9.
 
-**Task 9 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in evaluation (task 5), legal analysis (task 6), and simulation (task 7) results. Include a Legal Analysis section with Vietnamese citations and a Simulation section showing scenario pass/fail results. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 9 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in the full returned blobs from task 5 (legal), task 6 (spec), and task 7 (simulation). Cite Vietnamese legal text verbatim from `legal_findings[].verbatim_text` and reference the applicable laws from `legal_findings[].applicable_laws`. Enumerate API contracts, data models, sequence flows, and edge cases from the spec report. Show per-scenario setup, action, expected, and outcome from the simulation output. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
 
 </instructions>
