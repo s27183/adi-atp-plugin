@@ -28,7 +28,7 @@ $ARGUMENTS
 <safety>
 
 Do not retry, abort, or report failure for ATP tool calls until you receive
-a final response or an explicit error. Tool calls may take 2-5 minutes —
+a final response or an explicit error. Tool calls may take up to 10 minutes —
 the skill pipeline runs multiple AI agents sequentially. If you see a timeout
 warning, ignore it and wait for the result.
 
