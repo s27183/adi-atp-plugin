@@ -66,6 +66,28 @@ Execute the following nine tasks sequentially.
 
 **Task 8 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 9.
 
-**Task 9 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in the full returned blobs from task 5 (legal), task 6 (attack surface), and task 7 (simulation). Cite Vietnamese legal text verbatim from `legal_findings[].verbatim_text` and reference the applicable laws from `legal_findings[].applicable_laws`. Enumerate known and novel attacks, missing controls, and compound vulnerabilities from the attack-surface report. Show per-scenario setup, action, expected, and outcome from the simulation output. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 9 — Craft reports:** Produce a markdown report and a self-contained HTML report for the user, grounded in the full blobs returned by task 5 (legal), task 6 (attack surface), and task 7 (simulation). Three references govern the work:
+- [references/report-architecture.md](references/report-architecture.md) defines the section map for an attack surface report — sidebar, collapsible state, and the Attacks section (known + novel) as the centerpiece.
+- [references/report-base.html](references/report-base.html) is the HTML skeleton (sidebar, page header, card/callout/mermaid CSS, download buttons). Fill in the marker comments `<!-- TITLE -->`, `<!-- SIDEBAR_NAV -->`, `<!-- CONTENT_SECTIONS -->`, `<!-- MARKDOWN_CONTENT -->`, `<!-- JSON_CONTENT -->`.
+- [../../references/report-format.md](../../references/report-format.md) is the shared rendering ruleset — page header, severity-coded finding cards, callouts, legal-citation pattern, simulation-outcome rendering, section ownership, safety, and VN language conventions. Stay within its CSS class vocabulary; the skeleton's stylesheet will not render invented classes.
+
+**Sections to emit:**
+
+1. **Page header** with risk badge, date, target, scope. Subtitle states the attack-surface verdict in one sentence.
+2. **Overview section** — one-paragraph summary with the attack-surface verdict, followed by a Key Findings list.
+3. **Analysis section** — Gap Assessment cards (always-open, severity-coded by category) and Compound Vulnerabilities cards showing which gap categories interact, severity, and blast radius.
+4. **Attacks section** — two subsections:
+   - **Known Attacks** — one `<div class="card">` per item from `known_attacks[]`, first one `always-open`. Header: `[KA-1]` ID badge, attack label, severity badge. Body: "What compounds" (list of gap categories), attack path as `flow-step` HTML (each step shows actor and the governance gap it exploits via `badge-governance` or `badge-critical`), blast radius in `<div class="warning">`, precedent citation (incident name + dollar figure) with a solid card border styling cue.
+   - **Novel Attacks** — one card per item from `novel_attacks[]`, all collapsed. Same structure but with a `[NA-n]` ID badge and a confidence pill (`badge-low` HIGH / `badge-medium` MEDIUM / `badge-high` LOW-confidence) plus a "no precedent" note. Use dashed border styling cue.
+5. **Controls section** — Missing Controls cards (always-visible), one per item from `missing_controls[]`. Two-column layout: control name + risk created.
+6. **Legal Analysis section** — a card per legal topic from `legal_findings[]`. Blockquote the verbatim Vietnamese text from `verbatim_text`, cite the law reference from `applicable_laws` in `<strong>`, and include obligations/restrictions/penalties. Follow the Legal Analysis pattern in `report-format.md`.
+7. **Simulation section** — a scenario results table (scenario / outcome badge / finding) followed by a discoveries callout. Use the outcome rendering rules in `report-format.md` — `regulatory_gap` gets amber + gap framing, not red + failure framing. Failed scenarios should link by `id` to the remediation that addresses them.
+8. **Remediation section** — prioritised fixes timeline using `badge-p0` / `badge-p1` / `badge-p2` pills. Each row: label, which attacks it addresses (reference `KA-n` / `NA-n` IDs), whether it requires coordinated changes across areas.
+
+**Diagrams to emit:** attack paths render as styled HTML flow-steps with governance-gap annotations (`badge-governance`, `badge-critical`) in the HTML report. Mermaid goes in the bundled markdown only — a `sequenceDiagram` for at least one known attack and one novel attack showing attacker → compromised control → blast-radius actor chain. Do not inline mermaid into the HTML report.
+
+**Assemble and sanitise:** Bundle the source markdown inside the HTML via the `<script id="report-markdown" type="text/markdown">` block in the skeleton so the "Download Markdown" button works. Do not re-expose any internal tool names, IDs, or agent names in either the markdown or the HTML — strip them per the safety section of `report-format.md`.
+
+This completes the skill.
 
 </instructions>

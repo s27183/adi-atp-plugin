@@ -59,6 +59,29 @@ Execute the following eight tasks sequentially.
 
 **Task 7 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate compliance gaps or regulatory risks. Proceed to task 8.
 
-**Task 8 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in the full returned blobs from task 5 (legal) and task 6 (simulation). Cite Vietnamese legal text verbatim from `legal_findings[].verbatim_text` and reference the applicable laws from `legal_findings[].applicable_laws`. Map obligations, restrictions, and penalties per finding. Show per-scenario setup, action, expected, and outcome from the simulation output. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 8 — Craft reports:** Produce a markdown report and a self-contained HTML report for the user, grounded in the full blobs returned by task 5 (legal) and task 6 (simulation). Three references govern the work:
+- [references/report-architecture.md](references/report-architecture.md) defines the section map for a legal evaluation report — sidebar, collapsible state, and the Obligations Assessment table as the centerpiece (every obligation must carry a verbatim Vietnamese citation).
+- [references/report-base.html](references/report-base.html) is the HTML skeleton (sidebar, page header, card/callout/mermaid CSS, download buttons). Fill in the marker comments `<!-- TITLE -->`, `<!-- SIDEBAR_NAV -->`, `<!-- CONTENT_SECTIONS -->`, `<!-- MARKDOWN_CONTENT -->`, `<!-- JSON_CONTENT -->`.
+- [../../references/report-format.md](../../references/report-format.md) is the shared rendering ruleset — page header, severity-coded finding cards, callouts, legal-citation pattern, simulation-outcome rendering, section ownership, safety, and VN language conventions. Stay within its CSS class vocabulary; the skeleton's stylesheet will not render invented classes.
+
+**Sections to emit:**
+
+1. **Page header** with risk badge, date, target, scope. Subtitle states the legal verdict in one sentence (e.g., "Pilot-eligible under NQ 05/2025 subject to two unresolved ambiguities").
+2. **Overview section** — one-paragraph summary with the legal verdict, followed by a Key Findings list.
+3. **Classification section** (always-open) — one `<div class="card always-open">` framing the entire legal analysis: entity type, applicable legal status (e.g., "Virtual Asset Service Provider — pilot under NQ 05/2025"), jurisdiction, classification caveats or regulator positions. Ambiguities in classification get a `badge-medium` amber pill.
+4. **Obligations Assessment table** (always-open) — sortable columns: requirement (English paraphrase), legal basis (Vietnamese citation with article number), verbatim text (blockquoted Vietnamese from `nguyên văn` — never paraphrase), status (`badge-low` MET / `badge-critical` UNMET / `badge-medium` AMBIGUOUS / `badge-governance` N/A), gap risk (`badge-critical` / `badge-high` / `badge-medium` / `badge-low`). This is the defensibility claim — every row must carry a verbatim citation.
+5. **Ambiguities section** — one `<div class="card">` per regulatory ambiguity. Each card: the ambiguous area, why it is ambiguous (no statute / conflicting interpretations / absent jurisprudence), what the skill concluded and on what basis (e.g., applying BLDS agency principles to software agents lacking explicit regulation). Collapsed if empty, visible if populated. This is where the skill's lateral-bridging value becomes visible.
+6. **Cross-Border section** — one card per jurisdiction interaction when the activity crosses borders. Each card: what each jurisdiction requires, where they conflict, which controls take precedence, unresolved gaps. Flag data-localisation, licensing reciprocity, and AML information-sharing requirements specifically. Collapsed if empty, visible if populated.
+7. **Legal Analysis section** — a card per legal topic (licensing, capital, KYC/AML, cross-border transfer, consumer protection). Blockquote the verbatim Vietnamese text from `verbatim_text`, cite the law reference from `applicable_laws` in `<strong>` (e.g., "NQ 05/2025, Điều 7", "BLDS 2015, Điều 584"), and include obligations, restrictions, penalties, and identified gaps. Follow the Legal Analysis pattern in `report-format.md`.
+8. **Simulation section** — a scenario results table (scenario / outcome badge / finding) followed by a discoveries callout. Use the outcome rendering rules in `report-format.md` — `regulatory_gap` gets amber + gap framing, not red + failure framing. Failed scenarios should link by `id` to the related obligation in the Obligations table.
+9. **Recommendations section** — priority-ordered action list using `badge-p0` (required before activity proceeds — e.g., obtain licence, file notification) / `badge-p1` (during operation — periodic reporting, record retention) / `badge-p2` (escalate to counsel). Each recommendation must cite the obligation or ambiguity that motivates it.
+
+**Diagrams to emit:**
+- A mermaid `sequenceDiagram` showing the primary regulated workflow end-to-end across actors with governance touchpoints marked on each step.
+- A mermaid `stateDiagram-v2` for any obligation with a lifecycle (AML reporting state, licence lifecycle, record retention window).
+
+**Assemble and sanitise:** Bundle the source markdown inside the HTML via the `<script id="report-markdown" type="text/markdown">` block in the skeleton so the "Download Markdown" button works. Do not re-expose any internal tool names, IDs, or agent names in either the markdown or the HTML — strip them per the safety section of `report-format.md`.
+
+This completes the skill.
 
 </instructions>

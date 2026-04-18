@@ -67,6 +67,28 @@ Execute the following nine tasks sequentially.
 
 **Task 8 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 9.
 
-**Task 9 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in the full returned blobs from task 5 (legal), task 6 (design), and task 7 (simulation). Cite Vietnamese legal text verbatim from `legal_findings[].verbatim_text` and reference the applicable laws from `legal_findings[].applicable_laws`. Enumerate design options from the `options[]` field with their trade-offs and risks. Show per-scenario setup, action, expected, and outcome from the simulation output. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 9 — Craft reports:** Produce a markdown report and a self-contained HTML report for the user, grounded in the full blobs returned by task 5 (legal), task 6 (design), and task 7 (simulation). Three references govern the work:
+- [references/report-architecture.md](references/report-architecture.md) defines the section map for a feature design report — sidebar, collapsible state, and the Options section with the recommendation callout as the centerpiece.
+- [references/report-base.html](references/report-base.html) is the HTML skeleton (sidebar, page header, card/callout/mermaid CSS, download buttons). Fill in the marker comments `<!-- TITLE -->`, `<!-- SIDEBAR_NAV -->`, `<!-- CONTENT_SECTIONS -->`, `<!-- MARKDOWN_CONTENT -->`, `<!-- JSON_CONTENT -->`.
+- [../../references/report-format.md](../../references/report-format.md) is the shared rendering ruleset — page header, severity-coded finding cards, callouts, legal-citation pattern, simulation-outcome rendering, section ownership, safety, and VN language conventions. Stay within its CSS class vocabulary; the skeleton's stylesheet will not render invented classes.
+
+**Sections to emit:**
+
+1. **Page header** with risk badge, date, target, scope.
+2. **Overview section** — one-paragraph summary with the recommended option, followed by a Key Findings list.
+3. **Analysis section** — Gap Assessment cards (always-open, severity-coded by category) and Compound Vulnerabilities cards showing gap interaction chains.
+4. **Options section** — one expandable `<div class="card">` per option from `evaluation.options[]`. Header shows: option name (describe the trade-off, not the technology), one-line trade-off, severity badge. Body lists: "Optimizes" / "Sacrifices" (what this option gains and loses), specifications organised by concern (not by domain), risks (where domain interactions create vulnerabilities). The recommended option card gets `always-open` plus a `badge-low` "RECOMMENDED" pill in the header.
+5. **Recommendation section** — prominent `<div class="callout">` below the options stating which option, why, and what residual risk is accepted with its mitigation.
+6. **Legal Analysis section** — a card per legal topic from `legal_findings[]`. Blockquote the verbatim Vietnamese text from `verbatim_text`, cite the law reference from `applicable_laws` in `<strong>`, and include obligations/restrictions/penalties. Follow the Legal Analysis pattern in `report-format.md`.
+7. **Simulation section** — a scenario results table (scenario / outcome badge / finding) followed by a discoveries callout. Use the outcome rendering rules in `report-format.md` — `regulatory_gap` gets amber + gap framing, not red + failure framing. Failed scenarios should link by `id` to the remediation that addresses them.
+8. **Remediations section** — priority timeline using `badge-p0` (before launch) / `badge-p1` (before scale) / `badge-p2` (regulatory insurance) pills. Each row should link back to the compound vulnerability it addresses.
+
+**Diagrams to emit:**
+- At least one mermaid `sequenceDiagram` showing the recommended option's happy-path flow end-to-end across actors (user → feature → governance controls → downstream systems).
+- A mermaid `stateDiagram-v2` for any feature lifecycle with labelled transitions (e.g., transaction status, user KYC state, authorisation gate).
+
+**Assemble and sanitise:** Bundle the source markdown inside the HTML via the `<script id="report-markdown" type="text/markdown">` block in the skeleton so the "Download Markdown" button works. Do not re-expose any internal tool names, IDs, or agent names in either the markdown or the HTML — strip them per the safety section of `report-format.md`.
+
+This completes the skill.
 
 </instructions>

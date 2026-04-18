@@ -67,6 +67,28 @@ Execute the following nine tasks sequentially.
 
 **Task 8 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 9.
 
-**Task 9 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in the full returned blobs from task 5 (legal), task 6 (comparison), and task 7 (simulation). Cite Vietnamese legal text verbatim from `legal_findings[].verbatim_text` and reference the applicable laws from `legal_findings[].applicable_laws`. Enumerate per-system maturity profiles, strengths, weaknesses, and key differences from the `systems[]` field in the comparison report. Show per-scenario setup, action, expected, and outcome from the simulation output. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 9 — Craft reports:** Produce a markdown report and a self-contained HTML report for the user, grounded in the full blobs returned by task 5 (legal), task 6 (comparison), and task 7 (simulation). Three references govern the work:
+- [references/report-architecture.md](references/report-architecture.md) defines the section map for a systems comparison report — sidebar, collapsible state, and the Side-by-Side comparison table as the centerpiece.
+- [references/report-base.html](references/report-base.html) is the HTML skeleton (sidebar, page header, card/callout/mermaid CSS, download buttons). Fill in the marker comments `<!-- TITLE -->`, `<!-- SIDEBAR_NAV -->`, `<!-- CONTENT_SECTIONS -->`, `<!-- MARKDOWN_CONTENT -->`, `<!-- JSON_CONTENT -->`.
+- [../../references/report-format.md](../../references/report-format.md) is the shared rendering ruleset — page header, severity-coded finding cards, callouts, legal-citation pattern, simulation-outcome rendering, section ownership, safety, and VN language conventions. Stay within its CSS class vocabulary; the skeleton's stylesheet will not render invented classes.
+
+**Sections to emit:**
+
+1. **Page header** with risk badge, date, target, scope. Subtitle states the comparison verdict in one sentence (e.g., "System A matches governance maturity on controls but not on attribution").
+2. **Overview section** — one-paragraph summary with the comparison verdict, followed by a Key Findings list.
+3. **Comparison section** — Side-by-Side table as an `always-open` card: categories as rows grouped by domain (operational / regulatory / security), systems as columns. Each cell shows status (WORKING / KNOWN GAP / BLIND SPOT with `badge-low` / `badge-medium` / `badge-critical`) and a one-line evidence note. Above the table, a maturity profile summary per system: working count, known-gap count, blind-spot count. Then Key Differences cards (always-open) — each difference grounded in governance coverage, with "System A does better: …" / "System B does better: …" framing and evidence. Then per-system detail cards (collapsed) — header with system name + maturity level badge (HIGH / MEDIUM / LOW); body with strengths, weaknesses, system-specific gaps.
+4. **Analysis section** — Gap Assessment cards (severity-coded) and Compound Exposure cards per system, showing which cross-domain failure combinations each system is vulnerable to.
+5. **Legal Analysis section** — a card per legal topic from `legal_findings[]`. Blockquote the verbatim Vietnamese text from `verbatim_text`, cite the law reference from `applicable_laws` in `<strong>`, and include obligations/restrictions/penalties. Follow the Legal Analysis pattern in `report-format.md`.
+6. **Simulation section** — a scenario results table (scenario / outcome badge / finding) followed by a discoveries callout. Use the outcome rendering rules in `report-format.md` — `regulatory_gap` gets amber + gap framing, not red + failure framing. Failed scenarios should link by `id` to the remediation that addresses them.
+7. **Assessment section** — a `<div class="callout">` stating what both systems need (shared gaps neither closes) and which system is stronger for which use case.
+8. **Remediations section** — priority timeline using `badge-p0` / `badge-p1` / `badge-p2` pills. Each row labelled with which system(s) the remediation applies to.
+
+**Diagrams to emit:**
+- A mermaid `sequenceDiagram` comparing both systems' handling of a critical workflow (two subflows inside one diagram, annotated per system) — chosen so the governance divergence is visible.
+- A mermaid `stateDiagram-v2` for any lifecycle where the two systems diverge in transitions or allowed states.
+
+**Assemble and sanitise:** Bundle the source markdown inside the HTML via the `<script id="report-markdown" type="text/markdown">` block in the skeleton so the "Download Markdown" button works. Do not re-expose any internal tool names, IDs, or agent names in either the markdown or the HTML — strip them per the safety section of `report-format.md`.
+
+This completes the skill.
 
 </instructions>

@@ -69,6 +69,26 @@ Execute the following nine tasks sequentially.
 
 **Task 8 — Present simulation results:** Summarize the simulation findings for the user. Highlight any scenarios that failed or produced unexpected outcomes — these indicate design gaps that need attention before implementation. Proceed to task 9.
 
-**Task 9 — Craft reports:** Write the findings to a markdown file, then render an interactive HTML report using [report-base.html](references/report-base.html) as skeleton and [references/report-architecture.md](references/report-architecture.md) for structure. Ground the report in the full returned blobs from task 5 (legal), task 6 (spec), and task 7 (simulation). Cite Vietnamese legal text verbatim from `legal_findings[].verbatim_text` and reference the applicable laws from `legal_findings[].applicable_laws`. Enumerate API contracts, data models, sequence flows, and edge cases from the spec report. Show per-scenario setup, action, expected, and outcome from the simulation output. Include diagrams where they clarify the analysis. Bundle the markdown inside the HTML.
+**Task 9 — Craft reports:** Produce a markdown spec and a self-contained HTML report for the user, grounded in the full blobs returned by task 5 (legal), task 6 (spec), and task 7 (simulation). Three references govern the work:
+- [references/report-architecture.md](references/report-architecture.md) defines the section map for an implementation spec report — sidebar, collapsible state, and the API Contracts / Data Models / Sequence Flows triptych as the centerpiece.
+- [references/report-base.html](references/report-base.html) is the HTML skeleton (sidebar, page header, card/callout/mermaid CSS, download buttons). Fill in the marker comments `<!-- TITLE -->`, `<!-- SIDEBAR_NAV -->`, `<!-- CONTENT_SECTIONS -->`, `<!-- MARKDOWN_CONTENT -->`, `<!-- JSON_CONTENT -->`.
+- [../../references/report-format.md](../../references/report-format.md) is the shared rendering ruleset — page header, severity-coded finding cards, callouts, legal-citation pattern, simulation-outcome rendering, section ownership, safety, and VN language conventions. Stay within its CSS class vocabulary; the skeleton's stylesheet will not render invented classes.
+
+**Sections to emit:**
+
+1. **Page header** with risk badge, date, target, scope.
+2. **Overview section** — Design Decision in a `<div class="callout">` (what was chosen, what trade-off was accepted), followed by a Key Findings list.
+3. **Analysis section** — Gap Assessment cards (always-open) and Compound Vulnerabilities cards per the shared finding card pattern.
+4. **Contracts section** — API Contract cards with method badges (`badge-method-post`, `badge-method-get`, `badge-method-delete`), path in `<code>`, expandable body with request/response tables and a governance-control bullet list. Data Model cards with a field table that includes a "Governance Role" column; `badge-governance` pills on fields that exist for governance (audit, attribution, scope enforcement). First API endpoint `always-open`, rest collapsed.
+5. **Behavior section** — Sequence Flows using the `flow-step` / `flow-step-num` / `flow-step-actor` / `flow-step-action` / `flow-step-gov` HTML pattern (always visible, not collapsible). Edge Cases as collapsed `<div class="card">` accordions with trigger / governance impact / required response / blast radius (`<div class="warning">` for red blast radius).
+6. **Legal Analysis section** — a card per legal topic from `legal_findings[]`. Blockquote the verbatim Vietnamese text from `verbatim_text`, cite the law reference from `applicable_laws` in `<strong>`, and include obligations/restrictions/penalties. Follow the Legal Analysis pattern in `report-format.md`.
+7. **Simulation section** — a scenario results table (scenario / outcome badge / finding) followed by a discoveries callout. Use the outcome rendering rules in `report-format.md` — `regulatory_gap` gets amber + gap framing, not red + failure framing. Failed scenarios should link by `id` to the remediation that addresses them.
+8. **Governance section** — Invariants as numbered `<div class="invariant">` cards (`INV-01`, `INV-02` …) for system-wide "always" and "never" rules. Dependencies as a table. Remediations as a `badge-p0` / `badge-p1` / `badge-p2` timeline, each row showing label + what it addresses.
+
+**Diagrams to emit:** sequence flows and state machines render as styled HTML flow-steps/`state-machine` pills in the HTML report (so governance badges render inline). Mermaid goes in the bundled markdown only — a `sequenceDiagram` for the primary end-to-end flow and a `stateDiagram-v2` for any entity lifecycle (transaction status, KYC status). Do not inline mermaid into the HTML report.
+
+**Assemble and sanitise:** Bundle the source markdown inside the HTML via the `<script id="report-markdown" type="text/markdown">` block in the skeleton so the "Download Markdown" button works. Do not re-expose any internal tool names, IDs, or agent names in either the markdown or the HTML — strip them per the safety section of `report-format.md`.
+
+This completes the skill.
 
 </instructions>
